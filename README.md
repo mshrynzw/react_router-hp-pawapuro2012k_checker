@@ -63,7 +63,7 @@
 - Tailwind CSS v4
 - Radix UI（UIプリミティブ）
 - ESLint / Prettier
-- Cloudflare Pages（デプロイ）
+- Cloudflare Workers（デプロイ）
 
 ---
 
@@ -148,7 +148,7 @@ src/
 
 ---
 
-## Cloudflare Pages へのデプロイ
+## Cloudflare へのデプロイ
 
 1. ビルド
 
@@ -170,8 +170,8 @@ npm run deploy:cloudflare
 
 補足:
 
-- 出力ディレクトリは `wrangler.toml` の `dist` 前提です。
-- SPA ルーティングのフォールバックは `public/_redirects` で設定しています。
+- 出力ディレクトリは `wrangler.toml` の `[assets] directory = "dist"` で設定しています。
+- SPA ルーティングのフォールバックは `wrangler.toml` の `[assets] not_found_handling = "single-page-application"` で設定しています。
 - 本番相当のローカル確認は `npm run dev:cloudflare` を利用します。
 
 ---
