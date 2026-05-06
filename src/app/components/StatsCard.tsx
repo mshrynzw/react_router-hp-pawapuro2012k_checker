@@ -7,6 +7,7 @@ interface StatsCardProps {
   title: string;
   stats: { [key: string]: number };
   onChange: (stats: { [key: string]: number }) => void;
+  onInputChange?: () => void;
   accentColor: string;
   showSenseToggle?: boolean;
 }
@@ -15,15 +16,18 @@ export function StatsCard({
   title,
   stats,
   onChange,
+  onInputChange,
   accentColor,
   showSenseToggle = false,
 }: StatsCardProps) {
   const updateStat = (key: string, value: number) => {
     onChange({ ...stats, [key]: value });
+    onInputChange?.();
   };
 
   const updateSenseCircle = (enabled: boolean) => {
     onChange({ ...stats, senseCircle: enabled ? 1 : 0 });
+    onInputChange?.();
   };
 
   return (

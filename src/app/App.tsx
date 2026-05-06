@@ -31,6 +31,14 @@ const DEFAULT_TARGET_STATS: Stats = {
   stamina: 80,
 };
 
+const SOUND_FILES = Object.values(
+  import.meta.glob('/public/sounds/*.mp3', {
+    eager: true,
+    query: '?url',
+    import: 'default',
+  }),
+) as string[];
+
 function isStats(value: unknown): value is Stats {
   if (typeof value !== 'object' || value === null) return false;
   return Object.values(value).every((v) => typeof v === 'number' && Number.isFinite(v));
@@ -81,7 +89,17 @@ export default function App() {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
   }, [currentStats, targetStats, requiredPoints]);
 
+  const playRandomSound = () => {
+    if (SOUND_FILES.length === 0) return;
+    const randomIndex = Math.floor(Math.random() * SOUND_FILES.length);
+    const audio = new Audio(SOUND_FILES[randomIndex]);
+    void audio.play().catch(() => {
+      // ignore autoplay or playback errors
+    });
+  };
+
   const handleCalculate = () => {
+    playRandomSound();
     const calculated = calculateRequiredPoints(currentStats, targetStats);
     setRequiredPoints(calculated);
   };
@@ -99,6 +117,7 @@ export default function App() {
             title="現在の能力"
             stats={currentStats}
             onChange={setCurrentStats}
+            onInputChange={playRandomSound}
             accentColor="from-blue-500 to-cyan-500"
             showSenseToggle
           />
@@ -107,6 +126,7 @@ export default function App() {
             title="目標の能力"
             stats={targetStats}
             onChange={setTargetStats}
+            onInputChange={playRandomSound}
             accentColor="from-purple-500 to-pink-500"
           />
         </div>
