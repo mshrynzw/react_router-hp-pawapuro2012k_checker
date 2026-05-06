@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { StatsCard } from './components/StatsCard';
 import { CalculateButton } from './components/CalculateButton';
@@ -9,15 +9,77 @@ interface Stats {
   [key: string]: number;
 }
 
+interface RequiredPoints {
+  muscle: number;
+  agility: number;
+  technique: number;
+  mental: number;
+}
+
+const STORAGE_KEY = 'pawapuro2012k_checker_state';
+
+const DEFAULT_CURRENT_STATS: Stats = {
+  ballSpeed: 150,
+  control: 50,
+  stamina: 50,
+  senseCircle: 1,
+};
+
+const DEFAULT_TARGET_STATS: Stats = {
+  ballSpeed: 170,
+  control: 80,
+  stamina: 80,
+};
+
+function isStats(value: unknown): value is Stats {
+  if (typeof value !== 'object' || value === null) return false;
+  return Object.values(value).every((v) => typeof v === 'number' && Number.isFinite(v));
+}
+
+function isRequiredPoints(value: unknown): value is RequiredPoints {
+  if (typeof value !== 'object' || value === null) return false;
+  const record = value as Record<string, unknown>;
+  return (
+    typeof record.muscle === 'number' &&
+    typeof record.agility === 'number' &&
+    typeof record.technique === 'number' &&
+    typeof record.mental === 'number'
+  );
+}
+
+function loadAppState(): { currentStats: Stats; targetStats: Stats; requiredPoints: RequiredPoints | null } {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+    }
+
+    const parsed: unknown = JSON.parse(raw);
+    if (typeof parsed !== 'object' || parsed === null) {
+      return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+    }
+
+    const data = parsed as Record<string, unknown>;
+    return {
+      currentStats: isStats(data.currentStats) ? data.currentStats : DEFAULT_CURRENT_STATS,
+      targetStats: isStats(data.targetStats) ? data.targetStats : DEFAULT_TARGET_STATS,
+      requiredPoints: isRequiredPoints(data.requiredPoints) ? data.requiredPoints : null,
+    };
+  } catch {
+    return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+  }
+}
+
 export default function App() {
-  const [currentStats, setCurrentStats] = useState<Stats>({});
-  const [targetStats, setTargetStats] = useState<Stats>({});
-  const [requiredPoints, setRequiredPoints] = useState<{
-    muscle: number;
-    agility: number;
-    technique: number;
-    mental: number;
-  } | null>(null);
+  const [initialState] = useState(loadAppState);
+  const [currentStats, setCurrentStats] = useState<Stats>(initialState.currentStats);
+  const [targetStats, setTargetStats] = useState<Stats>(initialState.targetStats);
+  const [requiredPoints, setRequiredPoints] = useState<RequiredPoints | null>(initialState.requiredPoints);
+
+  useEffect(() => {
+    const saveData = { currentStats, targetStats, requiredPoints };
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
+  }, [currentStats, targetStats, requiredPoints]);
 
   const handleCalculate = () => {
     const calculated = calculateRequiredPoints(currentStats, targetStats);
@@ -38,6 +100,7 @@ export default function App() {
             stats={currentStats}
             onChange={setCurrentStats}
             accentColor="from-blue-500 to-cyan-500"
+            showSenseToggle
           />
 
           <StatsCard

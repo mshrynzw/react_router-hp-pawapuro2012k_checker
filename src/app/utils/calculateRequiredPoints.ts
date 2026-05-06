@@ -205,5 +205,13 @@ export function calculateRequiredPoints(currentStats: Stats, targetStats: Stats)
     }
   }
 
+  const hasSenseCircle = (currentStats.senseCircle ?? 1) === 1;
+  if (hasSenseCircle) {
+    result.muscle = Math.floor(result.muscle * 0.9);
+    result.agility = Math.floor(result.agility * 0.9);
+    result.technique = Math.floor(result.technique * 0.9);
+    result.mental = Math.floor(result.mental * 0.9);
+  }
+
   return result;
 }
