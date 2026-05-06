@@ -13,6 +13,7 @@ interface RequiredPoints {
   muscle: number;
   agility: number;
   technique: number;
+  change: number;
   mental: number;
 }
 
@@ -51,6 +52,7 @@ function isRequiredPoints(value: unknown): value is RequiredPoints {
     typeof record.muscle === 'number' &&
     typeof record.agility === 'number' &&
     typeof record.technique === 'number' &&
+    typeof record.change === 'number' &&
     typeof record.mental === 'number'
   );
 }

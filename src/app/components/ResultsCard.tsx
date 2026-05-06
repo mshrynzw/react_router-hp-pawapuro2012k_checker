@@ -1,11 +1,12 @@
 import { motion } from 'motion/react';
-import { Dumbbell, Zap, Target, Brain, TrendingUp } from 'lucide-react';
+import { Dumbbell, Zap, Target, Circle, Brain, TrendingUp } from 'lucide-react';
 
 interface ResultsCardProps {
   results: {
     muscle: number;
     agility: number;
     technique: number;
+    change: number;
     mental: number;
   };
 }
@@ -34,6 +35,14 @@ const statConfig = [
     gradient: 'from-blue-500 to-cyan-500',
     bgGradient: 'from-blue-500/20 to-cyan-500/20',
     shadowColor: 'shadow-blue-500/50'
+  },
+  {
+    key: 'change',
+    label: '変化球',
+    icon: Circle,
+    gradient: 'from-emerald-500 to-teal-500',
+    bgGradient: 'from-emerald-500/20 to-teal-500/20',
+    shadowColor: 'shadow-emerald-500/50'
   },
   {
     key: 'mental',
@@ -147,7 +156,7 @@ export function ResultsCard({ results }: ResultsCardProps) {
                   transition={{ delay: 0.8, type: 'spring', stiffness: 150 }}
                   className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
                 >
-                  {results.muscle + results.agility + results.technique + results.mental}
+                  {results.muscle + results.agility + results.technique + results.change + results.mental}
                 </motion.span>
                 <span className="text-slate-400">pt</span>
               </div>

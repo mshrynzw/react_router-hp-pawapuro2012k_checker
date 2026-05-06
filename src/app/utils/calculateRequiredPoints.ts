@@ -6,10 +6,16 @@ type RequiredPoints = {
   muscle: number;
   agility: number;
   technique: number;
+  change: number;
   mental: number;
 };
 
-type PointCost = RequiredPoints;
+type PointCost = {
+  muscle: number;
+  agility: number;
+  technique: number;
+  mental: number;
+};
 
 const CONTROL_RANK_COST: Record<string, PointCost> = {
   G: { muscle: 0, agility: 0, technique: 10, mental: 7 },
@@ -145,6 +151,7 @@ export function calculateRequiredPoints(currentStats: Stats, targetStats: Stats)
     muscle: 0,
     agility: 0,
     technique: 0,
+    change: 0,
     mental: 0,
   };
 
@@ -199,7 +206,7 @@ export function calculateRequiredPoints(currentStats: Stats, targetStats: Stats)
       const mentalPoint =
         Math.ceil(variableCost / 8) + Math.ceil(totalAmountCost / 8) + Math.ceil(pitchCountCost / 8);
 
-      result.agility += changePoint;
+      result.change += changePoint;
       result.technique += techniquePoint + (beforeLearnedCount === 0 && afterLearnedCount > 0 ? 1 : 0);
       result.mental += mentalPoint;
     }
@@ -210,6 +217,7 @@ export function calculateRequiredPoints(currentStats: Stats, targetStats: Stats)
     result.muscle = Math.floor(result.muscle * 0.9);
     result.agility = Math.floor(result.agility * 0.9);
     result.technique = Math.floor(result.technique * 0.9);
+    result.change = Math.floor(result.change * 0.9);
     result.mental = Math.floor(result.mental * 0.9);
   }
 

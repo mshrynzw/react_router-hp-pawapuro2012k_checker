@@ -199,7 +199,7 @@ export const pitchTypes: PitchType[] = [
   {
     id: "twoSeam",
     name: "ツーシーム",
-    category: "シンカー系",
+    category: "その他",
     muscle: 4,
     agility: 4,
     technique: 4,
@@ -240,6 +240,6 @@ export const categories = [
   { id: "カーブ系", name: "カーブ系", icon: "🟣" },
   { id: "フォーク系", name: "フォーク系", icon: "🔴" },
   { id: "シンカー系", name: "シンカー系", icon: "🟡" },
-  { id: "チェンジアップ系", name: "チェンジアップ系", icon: "🟢" },
+  { id: "シュート系", name: "シュート系", icon: "🟢" },
   { id: "その他", name: "その他", icon: "⚪" },
 ];
