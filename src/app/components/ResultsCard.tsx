@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { Dumbbell, Zap, Target, Circle, Brain, TrendingUp } from 'lucide-react';
+import { motion } from "motion/react";
+import { Dumbbell, Zap, Target, Circle, Brain, TrendingUp } from "lucide-react";
 
 interface ResultsCardProps {
   results: {
@@ -13,45 +13,45 @@ interface ResultsCardProps {
 
 const statConfig = [
   {
-    key: 'muscle',
-    label: '筋力',
+    key: "muscle",
+    label: "筋力",
     icon: Dumbbell,
-    gradient: 'from-red-500 to-orange-500',
-    bgGradient: 'from-red-500/20 to-orange-500/20',
-    shadowColor: 'shadow-red-500/50'
+    gradient: "from-red-500 to-orange-500",
+    bgGradient: "from-red-500/20 to-orange-500/20",
+    shadowColor: "shadow-red-500/50",
   },
   {
-    key: 'agility',
-    label: '敏捷',
+    key: "agility",
+    label: "敏捷",
     icon: Zap,
-    gradient: 'from-yellow-500 to-amber-500',
-    bgGradient: 'from-yellow-500/20 to-amber-500/20',
-    shadowColor: 'shadow-yellow-500/50'
+    gradient: "from-yellow-500 to-amber-500",
+    bgGradient: "from-yellow-500/20 to-amber-500/20",
+    shadowColor: "shadow-yellow-500/50",
   },
   {
-    key: 'technique',
-    label: '技術',
+    key: "technique",
+    label: "技術",
     icon: Target,
-    gradient: 'from-blue-500 to-cyan-500',
-    bgGradient: 'from-blue-500/20 to-cyan-500/20',
-    shadowColor: 'shadow-blue-500/50'
+    gradient: "from-blue-500 to-cyan-500",
+    bgGradient: "from-blue-500/20 to-cyan-500/20",
+    shadowColor: "shadow-blue-500/50",
   },
   {
-    key: 'change',
-    label: '変化球',
+    key: "change",
+    label: "変化球",
     icon: Circle,
-    gradient: 'from-emerald-500 to-teal-500',
-    bgGradient: 'from-emerald-500/20 to-teal-500/20',
-    shadowColor: 'shadow-emerald-500/50'
+    gradient: "from-emerald-500 to-teal-500",
+    bgGradient: "from-emerald-500/20 to-teal-500/20",
+    shadowColor: "shadow-emerald-500/50",
   },
   {
-    key: 'mental',
-    label: '精神',
+    key: "mental",
+    label: "精神",
     icon: Brain,
-    gradient: 'from-purple-500 to-pink-500',
-    bgGradient: 'from-purple-500/20 to-pink-500/20',
-    shadowColor: 'shadow-purple-500/50'
-  }
+    gradient: "from-purple-500 to-pink-500",
+    bgGradient: "from-purple-500/20 to-pink-500/20",
+    shadowColor: "shadow-purple-500/50",
+  },
 ] as const;
 
 export function ResultsCard({ results }: ResultsCardProps) {
@@ -72,7 +72,7 @@ export function ResultsCard({ results }: ResultsCardProps) {
         <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 p-6">
           <div className="flex items-center justify-center gap-3">
             <TrendingUp className="w-6 h-6" />
-            <h2 className="text-3xl font-bold tracking-wide">必要な経験点</h2>
+            <h2 className="text-3xl font-bold tracking-wide">必要な経験値</h2>
             <TrendingUp className="w-6 h-6" />
           </div>
         </div>
@@ -94,13 +94,19 @@ export function ResultsCard({ results }: ResultsCardProps) {
                   className="relative group"
                 >
                   {/* カードグロー */}
-                  <div className={`absolute -inset-0.5 bg-gradient-to-r ${stat.gradient} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`} />
+                  <div
+                    className={`absolute -inset-0.5 bg-gradient-to-r ${stat.gradient} rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-500`}
+                  />
 
-                  <div className={`relative bg-gradient-to-br ${stat.bgGradient} backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50`}>
+                  <div
+                    className={`relative bg-gradient-to-br ${stat.bgGradient} backdrop-blur-sm rounded-2xl p-6 border border-slate-700/50`}
+                  >
                     {/* アイコン＆ラベル */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-3">
-                        <div className={`bg-gradient-to-br ${stat.gradient} p-3 rounded-xl shadow-lg ${stat.shadowColor}`}>
+                        <div
+                          className={`bg-gradient-to-br ${stat.gradient} p-3 rounded-xl shadow-lg ${stat.shadowColor}`}
+                        >
                           <Icon className="w-6 h-6" />
                         </div>
                         <span className="text-xl font-bold text-slate-100">{stat.label}</span>
@@ -108,7 +114,7 @@ export function ResultsCard({ results }: ResultsCardProps) {
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
-                        transition={{ delay: index * 0.1 + 0.3, type: 'spring', stiffness: 200 }}
+                        transition={{ delay: index * 0.1 + 0.3, type: "spring", stiffness: 200 }}
                         className={`bg-gradient-to-r ${stat.gradient} px-4 py-2 rounded-lg shadow-lg`}
                       >
                         <span className="text-2xl font-black">{value}</span>
@@ -120,7 +126,7 @@ export function ResultsCard({ results }: ResultsCardProps) {
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${percentage}%` }}
-                        transition={{ delay: index * 0.1 + 0.2, duration: 0.8, ease: 'easeOut' }}
+                        transition={{ delay: index * 0.1 + 0.2, duration: 0.8, ease: "easeOut" }}
                         className={`h-full bg-gradient-to-r ${stat.gradient} shadow-lg relative`}
                       >
                         {/* グロー効果 */}
@@ -131,7 +137,12 @@ export function ResultsCard({ results }: ResultsCardProps) {
                     {/* 六角形装飾 */}
                     <div className="absolute top-2 right-2 opacity-10">
                       <svg width="60" height="60" viewBox="0 0 60 60" className={`text-current`}>
-                        <polygon points="30,5 50,17.5 50,42.5 30,55 10,42.5 10,17.5" fill="currentColor" stroke="currentColor" strokeWidth="2" />
+                        <polygon
+                          points="30,5 50,17.5 50,42.5 30,55 10,42.5 10,17.5"
+                          fill="currentColor"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        />
                       </svg>
                     </div>
                   </div>
@@ -148,15 +159,19 @@ export function ResultsCard({ results }: ResultsCardProps) {
             className="mt-8 p-6 bg-gradient-to-r from-slate-800/80 to-slate-700/80 rounded-2xl border border-cyan-500/30"
           >
             <div className="flex items-center justify-between">
-              <span className="text-lg font-bold text-cyan-300">合計経験点</span>
+              <span className="text-lg font-bold text-cyan-300">合計経験値</span>
               <div className="flex items-center gap-3">
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  transition={{ delay: 0.8, type: 'spring', stiffness: 150 }}
+                  transition={{ delay: 0.8, type: "spring", stiffness: 150 }}
                   className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent"
                 >
-                  {results.muscle + results.agility + results.technique + results.change + results.mental}
+                  {results.muscle +
+                    results.agility +
+                    results.technique +
+                    results.change +
+                    results.mental}
                 </motion.span>
                 <span className="text-slate-400">pt</span>
               </div>

@@ -37,7 +37,7 @@ export function CalculateButton({ onClick, onClear }: CalculateButtonProps) {
         {/* ボタン本体 */}
         <div className="relative flex items-center gap-4 bg-gradient-to-r from-blue-600 to-cyan-600 px-12 py-6 rounded-2xl shadow-2xl border border-blue-400/50">
           <Sparkles className="w-6 h-6" />
-          <span className="text-2xl font-bold tracking-wide">経験点を計算</span>
+          <span className="text-2xl font-bold tracking-wide">経験値を計算</span>
           <Calculator className="w-6 h-6" />
         </div>
 

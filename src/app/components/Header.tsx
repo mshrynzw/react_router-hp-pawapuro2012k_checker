@@ -1,5 +1,5 @@
-import { motion } from 'motion/react';
-import { Trophy, Zap } from 'lucide-react';
+import { motion } from "motion/react";
+import { Trophy, Zap } from "lucide-react";
 
 export function Header() {
   return (
@@ -13,7 +13,7 @@ export function Header() {
         <div className="relative">
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="absolute inset-0 bg-gradient-to-r from-blue-500 via-cyan-500 to-blue-500 rounded-full blur-xl opacity-50"
           />
           <div className="relative bg-gradient-to-br from-blue-600 to-cyan-600 p-4 rounded-2xl shadow-2xl">
@@ -29,7 +29,7 @@ export function Header() {
         className="mb-3 bg-gradient-to-r from-blue-400 via-cyan-300 to-blue-400 bg-clip-text text-transparent"
       >
         <span className="block text-4xl md:text-5xl lg:text-6xl font-black tracking-tight">
-          サクセス 経験点カウンター
+          サクセス 経験値カウンター
         </span>
       </motion.h1>
 
