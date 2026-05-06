@@ -106,6 +106,13 @@ export default function App() {
     setRequiredPoints(calculated);
   };
 
+  const handleClear = () => {
+    window.localStorage.removeItem(STORAGE_KEY);
+    setCurrentStats(DEFAULT_CURRENT_STATS);
+    setTargetStats(DEFAULT_TARGET_STATS);
+    setRequiredPoints(null);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white overflow-auto">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)] pointer-events-none" />
@@ -133,7 +140,7 @@ export default function App() {
           />
         </div>
 
-        <CalculateButton onClick={handleCalculate} />
+        <CalculateButton onClick={handleCalculate} onClear={handleClear} />
 
         {requiredPoints && <ResultsCard results={requiredPoints} />}
       </div>
