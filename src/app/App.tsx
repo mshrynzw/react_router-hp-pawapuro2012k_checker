@@ -18,6 +18,7 @@ interface RequiredPoints {
 }
 
 const STORAGE_KEY = 'pawapuro2012k_checker_state';
+const DEFAULT_SE_PLAY_RATE = 100;
 
 const DEFAULT_CURRENT_STATS: Stats = {
   ballSpeed: 150,
@@ -57,16 +58,41 @@ function isRequiredPoints(value: unknown): value is RequiredPoints {
   );
 }
 
-function loadAppState(): { currentStats: Stats; targetStats: Stats; requiredPoints: RequiredPoints | null } {
+function isSePlayRate(value: unknown): value is number {
+  return (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 0 &&
+    value <= 100 &&
+    value % 10 === 0
+  );
+}
+
+function loadAppState(): {
+  currentStats: Stats;
+  targetStats: Stats;
+  requiredPoints: RequiredPoints | null;
+  sePlayRate: number;
+} {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
     if (!raw) {
-      return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+      return {
+        currentStats: DEFAULT_CURRENT_STATS,
+        targetStats: DEFAULT_TARGET_STATS,
+        requiredPoints: null,
+        sePlayRate: DEFAULT_SE_PLAY_RATE,
+      };
     }
 
     const parsed: unknown = JSON.parse(raw);
     if (typeof parsed !== 'object' || parsed === null) {
-      return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+      return {
+        currentStats: DEFAULT_CURRENT_STATS,
+        targetStats: DEFAULT_TARGET_STATS,
+        requiredPoints: null,
+        sePlayRate: DEFAULT_SE_PLAY_RATE,
+      };
     }
 
     const data = parsed as Record<string, unknown>;
@@ -74,9 +100,15 @@ function loadAppState(): { currentStats: Stats; targetStats: Stats; requiredPoin
       currentStats: isStats(data.currentStats) ? data.currentStats : DEFAULT_CURRENT_STATS,
       targetStats: isStats(data.targetStats) ? data.targetStats : DEFAULT_TARGET_STATS,
       requiredPoints: isRequiredPoints(data.requiredPoints) ? data.requiredPoints : null,
+      sePlayRate: isSePlayRate(data.sePlayRate) ? data.sePlayRate : DEFAULT_SE_PLAY_RATE,
     };
   } catch {
-    return { currentStats: DEFAULT_CURRENT_STATS, targetStats: DEFAULT_TARGET_STATS, requiredPoints: null };
+    return {
+      currentStats: DEFAULT_CURRENT_STATS,
+      targetStats: DEFAULT_TARGET_STATS,
+      requiredPoints: null,
+      sePlayRate: DEFAULT_SE_PLAY_RATE,
+    };
   }
 }
 
@@ -85,14 +117,17 @@ export default function App() {
   const [currentStats, setCurrentStats] = useState<Stats>(initialState.currentStats);
   const [targetStats, setTargetStats] = useState<Stats>(initialState.targetStats);
   const [requiredPoints, setRequiredPoints] = useState<RequiredPoints | null>(initialState.requiredPoints);
+  const [sePlayRate, setSePlayRate] = useState<number>(initialState.sePlayRate);
 
   useEffect(() => {
-    const saveData = { currentStats, targetStats, requiredPoints };
+    const saveData = { currentStats, targetStats, requiredPoints, sePlayRate };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(saveData));
-  }, [currentStats, targetStats, requiredPoints]);
+  }, [currentStats, targetStats, requiredPoints, sePlayRate]);
 
   const playRandomSound = () => {
     if (SOUND_FILES.length === 0) return;
+    if (Math.random() >= sePlayRate / 100) return;
+
     const randomIndex = Math.floor(Math.random() * SOUND_FILES.length);
     const audio = new Audio(SOUND_FILES[randomIndex]);
     void audio.play().catch(() => {
@@ -111,6 +146,7 @@ export default function App() {
     setCurrentStats(DEFAULT_CURRENT_STATS);
     setTargetStats(DEFAULT_TARGET_STATS);
     setRequiredPoints(null);
+    setSePlayRate(DEFAULT_SE_PLAY_RATE);
   };
 
   return (
@@ -140,7 +176,12 @@ export default function App() {
           />
         </div>
 
-        <CalculateButton onClick={handleCalculate} onClear={handleClear} />
+        <CalculateButton
+          onClick={handleCalculate}
+          onClear={handleClear}
+          sePlayRate={sePlayRate}
+          onSePlayRateChange={setSePlayRate}
+        />
 
         {requiredPoints && <ResultsCard results={requiredPoints} />}
       </div>
