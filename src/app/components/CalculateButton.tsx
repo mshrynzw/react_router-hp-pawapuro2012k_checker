@@ -138,7 +138,7 @@ export function CalculateButton({
           <AlertDialogHeader>
             <AlertDialogTitle>SEの発音%を0%に設定します</AlertDialogTitle>
             <AlertDialogDescription>
-              もう世界の屁こき隊のイメージは捨てるですね？
+              世界の屁こき隊のイメージは、もう捨てるですね？
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
