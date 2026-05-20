@@ -149,7 +149,7 @@ export const pitchTypes: PitchType[] = [
   // シンカー系
   {
     id: "sinker",
-    name: "シンカー",
+    name: "シンカー・スクリュー",
     category: "シンカー系",
     muscle: 3,
     agility: 5,
