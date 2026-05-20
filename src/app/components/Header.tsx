@@ -1,7 +1,13 @@
 import { motion } from "motion/react";
 import { Trophy, Zap } from "lucide-react";
+import { SePlayRateSelector } from "./SePlayRateSelector";
 
-export function Header() {
+interface HeaderProps {
+  sePlayRate: number;
+  onSePlayRateChange: (value: number) => void;
+}
+
+export function Header({ sePlayRate, onSePlayRateChange }: HeaderProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: -20 }}
@@ -50,6 +56,13 @@ export function Header() {
         transition={{ delay: 0.6, duration: 0.8 }}
         className="h-1 w-32 mx-auto mt-6 bg-gradient-to-r from-transparent via-cyan-500 to-transparent rounded-full"
       />
+
+      <div className="mt-6">
+        <SePlayRateSelector
+          sePlayRate={sePlayRate}
+          onSePlayRateChange={onSePlayRateChange}
+        />
+      </div>
     </motion.div>
   );
 }
